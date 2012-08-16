@@ -62,7 +62,7 @@
 	<key>QSPlugIn</key>
 	<dict>
 		<key>author</key>
-		<string>Blacktree, Inc.</string>
+		<string>QSApp</string>
 		<key>categories</key>
 		<array>
 			<string>Calendar</string>
@@ -74,13 +74,13 @@
 &lt;p&gt;This plugin adds actions for creating events and To-Dos from Quicksilver&lt;/p&gt;
 &lt;h3&gt;Actions&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Create Calendar Event&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;This action takes text from Quicksilver's 1st pane, and adds it as an event to your selected Calendar in Quicksilver's 3rd pane.&lt;br&gt;
+&lt;p&gt;This action takes text from Quicksilver&apos;s 1st pane, and adds it as an event to your selected Calendar in Quicksilver&apos;s 3rd pane.&lt;br&gt;
 Examples of text could be &lt;code&gt;Dinner with Tom next Tuesday&lt;/code&gt; or &lt;code&gt;Visit mum at 3pm&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;You can improve how an event displays in your Calendar by separating the name of the event and the time it takes place with two dashes &lt;code&gt;--&lt;/code&gt;&lt;br&gt;
 Using &lt;code&gt;Next Tuesday -- Dinner with Tom&lt;/code&gt; will create an event called just &lt;code&gt;Dinner with Tom&lt;/code&gt; in your calendar.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Create Calendar To-Do&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;This action takes text from Quicksilver's 1st pane, and adds it as an To-Do to your selected Calendar in Quicksilver's 3rd pane.  &lt;br&gt;
-If you do not see all your calendars appear in Quicksilver's 3rd pane, this is because not all calendars support To-Dos.&lt;br&gt;
+&lt;p&gt;This action takes text from Quicksilver&apos;s 1st pane, and adds it as an To-Do to your selected Calendar in Quicksilver&apos;s 3rd pane.  &lt;br&gt;
+If you do not see all your calendars appear in Quicksilver&apos;s 3rd pane, this is because not all calendars support To-Dos.&lt;br&gt;
 Examples of text could be &lt;code&gt;Do the shopping&lt;/code&gt; or &lt;code&gt;Pick up the kids from school&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;You can set the priority of an event by prefixing your event with any number of exclamation marks &lt;code&gt;!&lt;/code&gt;&lt;br&gt;
 &lt;em&gt;One&lt;/em&gt; exclamantion mark gives the To-Do a &lt;em&gt;low&lt;/em&gt; priority, &lt;em&gt;two&lt;/em&gt; give the To-Do a &lt;em&gt;medium&lt;/em&gt; priority and &lt;em&gt;three&lt;/em&gt; gives it a &lt;em&gt;high&lt;/em&gt; priority.&lt;/p&gt;
