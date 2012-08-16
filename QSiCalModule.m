@@ -104,18 +104,8 @@
 }
 
 -(QSObject *)createToDo:(QSObject *)dObject inCalendar:(QSObject *)iObject{
-	NSString *dateString=[dObject stringValue];
-	NSString *subjectString=dateString;
-	NSArray *components=[dateString componentsSeparatedByString:@"--"];
-	if ([components count]>1){
-		dateString=[components objectAtIndex:0];
-		subjectString=[[components objectAtIndex:1]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	}
-    // Despite the docs recommending against this method (since it only really works for English) there's no better alternative at this time
-	NSDate *date=[NSCalendarDate dateWithNaturalLanguageString:dateString];
-	
-    date=[date dateByAddingTimeInterval:-[[NSTimeZone localTimeZone]secondsFromGMTForDate:date]];
-	if (!date) date=[NSDate date];
+
+	NSString *subjectString = [dObject stringValue];
 	
     CalTask *newTask = [CalTask task];
     NSArray *listOfCalendars = [[CalCalendarStore defaultCalendarStore] calendars];
