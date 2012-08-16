@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
+	<key>CFBundleDisplayName</key>
+	<string>Calendar Plugin</string>
 	<key>CFBundleExecutable</key>
 	<string>Calendar Plugin</string>
 	<key>CFBundleIdentifier</key>
@@ -12,14 +14,12 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>Calendar Plugin</string>
-	<key>CFBundleDisplayName</key>
-	<string>Calendar Plugin</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.1.0</string>
 	<key>CFBundleVersion</key>
-	<string>112</string>
+	<string>11B</string>
 	<key>NSPrincipalClass</key>
 	<string>QSiCalModule</string>
 	<key>QSActions</key>
@@ -39,7 +39,7 @@
 			<key>indirectOptional</key>
 			<true/>
 			<key>name</key>
-			<string>Create iCal Event</string>
+			<string>Create Calendar Event</string>
 		</dict>
 		<key>QSiCalCreateToDoAction</key>
 		<dict>
@@ -56,7 +56,7 @@
 			<key>indirectOptional</key>
 			<true/>
 			<key>name</key>
-			<string>Create iCal To-Do</string>
+			<string>Create Calendar To-Do</string>
 		</dict>
 	</dict>
 	<key>QSPlugIn</key>
@@ -68,25 +68,29 @@
 			<string>Calendar</string>
 		</array>
 		<key>description</key>
-		<string>iCal Integration</string>
+		<string>Adds support for creating Events and To-Dos with Calendars on your Mac</string>
 		<key>extendedDescription</key>
-		<string>Adds actions for creating events and to-dos from text. *10.5+ only* Use v1.0.1 for 10.4 or less</string>
+		<string>&lt;h2&gt;Calendar Plugin&lt;/h2&gt;
+&lt;p&gt;This plugin adds actions for creating events and To-Dos from Quicksilver&lt;/p&gt;
+&lt;h3&gt;Actions&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Create Calendar Event&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This action takes text from Quicksilver's 1st pane, and adds it as an event to your selected Calendar in Quicksilver's 3rd pane.&lt;br&gt;
+Examples of text could be &lt;code&gt;Dinner with Tom next Tuesday&lt;/code&gt; or &lt;code&gt;Visit mum at 3pm&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;You can improve how an event displays in your Calendar by separating the name of the event and the time it takes place with two dashes &lt;code&gt;--&lt;/code&gt;&lt;br&gt;
+Using &lt;code&gt;Next Tuesday -- Dinner with Tom&lt;/code&gt; will create an event called just &lt;code&gt;Dinner with Tom&lt;/code&gt; in your calendar.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Create Calendar To-Do&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This action takes text from Quicksilver's 1st pane, and adds it as an To-Do to your selected Calendar in Quicksilver's 3rd pane.  &lt;br&gt;
+If you do not see all your calendars appear in Quicksilver's 3rd pane, this is because not all calendars support To-Dos.&lt;br&gt;
+Examples of text could be &lt;code&gt;Do the shopping&lt;/code&gt; or &lt;code&gt;Pick up the kids from school&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;You can set the priority of an event by prefixing your event with any number of exclamation marks &lt;code&gt;!&lt;/code&gt;&lt;br&gt;
+&lt;em&gt;One&lt;/em&gt; exclamantion mark gives the To-Do a &lt;em&gt;low&lt;/em&gt; priority, &lt;em&gt;two&lt;/em&gt; give the To-Do a &lt;em&gt;medium&lt;/em&gt; priority and &lt;em&gt;three&lt;/em&gt; gives it a &lt;em&gt;high&lt;/em&gt; priority.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;!! This is a medium priority todo&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;This todo has no priority set&lt;/code&gt;&lt;/p&gt;</string>
 		<key>icon</key>
 		<string>com.apple.iCal</string>
 		<key>qsversion</key>
 		<string>31DE</string>
 	</dict>
-	<key>QSPresetAdditionsTemplate</key>
-	<array>
-		<dict>
-			<key>ID</key>
-			<string>QSPresetQSiCalModule</string>
-			<key>name</key>
-			<string>QSiCalModule</string>
-			<key>source</key>
-			<string>QSiCalModule_Source</string>
-		</dict>
-	</array>
 	<key>QSRegistration</key>
 	<dict>
 		<key>QSBundleDrawingHandlers</key>
