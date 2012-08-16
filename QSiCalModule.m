@@ -18,15 +18,15 @@
 @implementation QSiCalModule
 
 - (NSArray *)validIndirectObjectsForAction:(NSString *)action directObject:(QSObject *)dObject{
-
+    
     NSArray *listOfCalendars = [[CalCalendarStore defaultCalendarStore] calendars];
 	
     NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:[listOfCalendars count]];
 	if (!listOfCalendars) {
 		[[NSAlert alertWithMessageText:@"iCal Error" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"You need to upgrade your calendars to a format compatible with Mac OS X Leopard by opening iCal first"] runModal];
 	}
-	for (CalCalendar *eachItem in listOfCalendars)
-            if(!([[eachItem type] isEqualToString:@"Birthday"]))
+	for (CalCalendar *eachItem in listOfCalendars) {
+        if(!([[eachItem type] isEqualToString:@"Birthday"]))
 		{
             if ([action isEqualToString:kQSiCalCreateToDoAction]) {
                 // some calendars don't support adding todos, they just throw an error when you try to create a task. We have to do a bit of trickery here to determine if they can support tasks or not by attempting to add one and then listening for the err.
@@ -51,12 +51,12 @@
 		}
 	}
     return [array autorelease];
-
+    
 }
 
-//NSLog(@"objects %@ %@",dObject,iObject);	
+//NSLog(@"objects %@ %@",dObject,iObject);
 -(QSObject *)createEvent:(QSObject *)dObject inCalendar:(QSObject *)iObject{
-//	NSString *calendar=iObject?[iObject objectForType:@"QSICalCalendar"]:@"";
+    //	NSString *calendar=iObject?[iObject objectForType:@"QSICalCalendar"]:@"";
 	NSString *dateString=[dObject stringValue];
 	NSString *subjectString=dateString;
 	NSArray *components=[dateString componentsSeparatedByString:@"--"];
@@ -97,7 +97,7 @@
     }
     
     QSiCalNotif(@"Event Created",subjectString);
-
+    
     
 	//-----
 	return nil;
@@ -160,7 +160,7 @@
         NSLog(@"Error: %@",err);
         return nil;
     }
-
+    
     QSiCalNotif(@"To-Do Created",todoTitle);
 	
 	return nil;
@@ -168,7 +168,7 @@
 
 void QSiCalNotif(NSString *title, NSString *message) {
     QSShowNotifierWithAttributes([NSDictionary dictionaryWithObjectsAndKeys:@"iCalPluginNotif", QSNotifierType, [QSResourceManager imageNamed:@"com.apple.iCal"], QSNotifierIcon, NSLocalizedString(title, nil), QSNotifierTitle, NSLocalizedString(message, nil), QSNotifierText, nil]);
-
+    
 }
 
 @end
