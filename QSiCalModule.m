@@ -3,7 +3,7 @@
 //  QSiCalModule
 //
 //  Created by Nicholas Jitkoff on 9/12/04.
-//  Copyright __MyCompanyName__ 2004. All rights reserved.
+//  Updated by Patrick Robertson on 16/08/12
 //
 
 #import "QSiCalModule.h"
