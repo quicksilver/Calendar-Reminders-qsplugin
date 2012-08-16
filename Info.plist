@@ -5,19 +5,21 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>iCal Module</string>
+	<string>iCal Plugin</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.blacktree.Quicksilver.QSiCalModule</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>iCal Module</string>
+	<string>iCal Plugin</string>
+	<key>CFBundleDisplayName</key>
+	<string>iCal Plugin</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.3</string>
+	<string>1.1.0</string>
 	<key>CFBundleVersion</key>
-	<string>10F</string>
+	<string>112</string>
 	<key>NSPrincipalClass</key>
 	<string>QSiCalModule</string>
 	<key>QSActions</key>
@@ -93,19 +95,14 @@
 			<string>QSiCalModule</string>
 		</dict>
 	</dict>
-	<key>QSRequirements</key>
-	<dict>
-		<key>feature</key>
-		<integer>1</integer>
-	</dict>
 	<key>QSResourceAdditions</key>
 	<dict>
-		<key>iCal-Empty</key>
+		<key>calendarIcon</key>
 		<dict>
 			<key>bundle</key>
-			<string>com.apple.iCal</string>
+			<string>com.blacktree.Quicksilver.QSiCalModule</string>
 			<key>resource</key>
-			<string>App-empty.icns</string>
+			<string>bookmark.icns</string>
 		</dict>
 	</dict>
 </dict>

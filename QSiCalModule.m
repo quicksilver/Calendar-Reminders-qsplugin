@@ -7,124 +7,56 @@
 //
 
 #import "QSiCalModule.h"
-#import <QSCore/QSLibrarian.h>
 #import <CalendarStore/CalendarStore.h>
 
 
 #define dayAttributes [NSDictionary dictionaryWithObjectsAndKeys:style,NSParagraphStyleAttributeName,[NSFont fontWithName:@"Helvetica Bold" size:54], NSFontAttributeName,[NSColor colorWithCalibratedWhite:0.2 alpha:1.0],NSForegroundColorAttributeName,nil]
 #define monthAttributes [NSDictionary dictionaryWithObjectsAndKeys:style2,NSParagraphStyleAttributeName,[NSNumber numberWithFloat:0.0],NSKernAttributeName,[NSFont fontWithName:@"Helvetica Bold" size:14], NSFontAttributeName,[NSColor whiteColor],NSForegroundColorAttributeName,nil]
 
+#define kQSiCalCreateToDoAction @"QSiCalCreateToDoAction"
+
 @implementation QSiCalModule
 
-- (BOOL)drawIconForObject:(QSObject *)object inRect:(NSRect)rect flipped:(BOOL)flipped{
-	
-	NSImage *icon=[QSResourceManager imageNamed:@"iCal-Empty"];
-	[icon setFlipped:flipped];
-	NSImageRep *bestBadgeRep=[icon bestRepresentationForSize:rect.size];    
-	[icon setSize:[bestBadgeRep size]];
-	[icon drawInRect:rect fromRect:NSMakeRect(0,0,[bestBadgeRep size].width,[bestBadgeRep size].height) operation:NSCompositeSourceOver fraction:1.0];
-	
-	NSMutableParagraphStyle *style=[[[NSParagraphStyle defaultParagraphStyle]mutableCopy]autorelease];
-	NSMutableParagraphStyle *style2=[[[NSParagraphStyle defaultParagraphStyle]mutableCopy]autorelease];
-	[style setAlignment:NSCenterTextAlignment];
-	[style2 setFirstLineHeadIndent:1.0];
-    [style2 setHeadIndent:1.0];
-	
-	
-	NSGraphicsContext *context=[NSGraphicsContext currentContext];
-	[context saveGraphicsState];
-	NSAffineTransform *transform=[NSAffineTransform transform];
-	
-	[transform translateXBy:NSMinX(rect) yBy:NSMinY(rect)];
-	[transform rotateByDegrees:11]; // 10.25 would be correct
-	[transform concat]; 
-	
-	NSCalendarDate *date=[NSCalendarDate date];
-	NSRect dayRect=NSMakeRect(25,10,92,54);
-	
-	NSRect monthRect=NSMakeRect(30,67,44,24);
-	
-	NSString *dayString=[NSString stringWithFormat:@"%d",[date dayOfMonth]];
-	NSString *monthString=[[date descriptionWithCalendarFormat:@"%b"]uppercaseString];
-	
-	dayRect.size.height=[dayString sizeWithAttributes:dayAttributes].height;
-	monthRect.size.height=[monthString sizeWithAttributes:monthAttributes].height;
-	
-	[[NSColor blackColor]set];
-	[dayString drawInRect:dayRect withAttributes:dayAttributes];
-	[monthString drawInRect:monthRect withAttributes:monthAttributes];
-	
-	[context restoreGraphicsState];
-	
-	return YES;	
-}
+- (NSArray *)validIndirectObjectsForAction:(NSString *)action directObject:(QSObject *)dObject{
 
-- (void)addNodesFromList:(NSArray *)list toArray:(NSMutableArray *)array{
+    NSArray *listOfCalendars = [[CalCalendarStore defaultCalendarStore] calendars];
 	
-	// get the list of calendars using CalCalendarStore
-	NSArray *listOfCalendars = [[CalCalendarStore defaultCalendarStore] calendars];
-	
+    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:[listOfCalendars count]];
 	if (!listOfCalendars) {
 		[[NSAlert alertWithMessageText:@"iCal Error" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"You need to upgrade your calendars to a format compatible with Mac OS X Leopard by opening iCal first"] runModal];
 	}
 	for (CalCalendar *eachItem in listOfCalendars)
-	{
-		if(!([[eachItem type] isEqualToString:@"Birthday"]))
+            if(!([[eachItem type] isEqualToString:@"Birthday"]))
 		{
-
-		QSObject *object = [QSObject objectWithName:[eachItem title]];
-		[object setDetails:@"Calendar"];
-		[object setIcon:[[[NSImage alloc] initByReferencingFile:[[NSBundle bundleWithIdentifier:@"com.apple.iCal"] pathForResource:@"bookmark" ofType:@"icns"]] autorelease]];
-		[object setObject:[eachItem title] forType:@"QSICalCalendar"];
-		[array addObject:object];
-		
-		
+            if ([action isEqualToString:kQSiCalCreateToDoAction]) {
+                // some calendars don't support adding todos, they just throw an error when you try to create a task. We have to do a bit of trickery here to determine if they can support tasks or not by attempting to add one and then listening for the err.
+                NSError *err = nil;
+                CalTask *testTask = [CalTask task];
+                [testTask setCalendar:eachItem];
+                [[CalCalendarStore defaultCalendarStore] saveTask:testTask error:&err];
+                // [err code] gives 1025 when "The xxx calendar does not support tasks"
+                if (err) {
+                    continue;
+                }
+            }
+            
+            QSObject *object = [QSObject objectWithName:[eachItem title]];
+            [object setDetails:@"Calendar"];
+            [object setIcon:[QSResourceManager imageNamed:@"calendarIcon"]];
+            [object setObject:[eachItem title] forType:@"QSICalCalendar"];
+            [object setObject:[eachItem uid] forMeta:@"QSiCalCalendarUID"];
+            [array addObject:object];
+            
+            
 		}
 	}
-		}
+    return [array autorelease];
 
-- (NSArray *)validIndirectObjectsForAction:(NSString *)action directObject:(QSObject *)dObject{
-	NSFileManager *fm=[NSFileManager defaultManager];
-	NSMutableArray *array=[NSMutableArray array];
-	NSString *path=[@"~/Library/Calendars" stringByStandardizingPath];
-	NSMutableArray *list=[NSMutableArray array];
-	
-	// Get contents of calendars folder
-	NSArray *dirArray = [fm directoryContentsAtPath:path];
-	
-	//NSLog(@"dirArray: %@", dirArray);
-	int i = 0;
-	for(NSString *path in dirArray)
-	{
-		//NSLog(@"path: %@", path);
-		if([[dirArray objectAtIndex:i] rangeOfString:@".calendar"].location != NSNotFound)
-		{
-			
-			[list addObject:path];
-		}
-		i += 1;
-	}
-	
-	//NSLog(@"list is: %@", list);
-	
-	//NSDictionary *nodes=[NSDictionary dictionaryWithContentsOfFile:[path stringByAppendingPathComponent:@"nodes.plist"]];
-	//NSArray *list=[nodes objectForKey:@"List"];
-	
-	[self addNodesFromList:list toArray:array];
-	
-	//NSMutableArray *objects=[QSLib scoredArrayForString:nil inSet:[NSSet setWithArray:array]];
-	return array;
-}
-- (NSAppleScript *)script{
-	NSString *path=[[NSBundle bundleForClass:[self class]]pathForResource:@"iCal" ofType:@"scpt"];
-	NSAppleScript *script=nil;
-	if (path)
-		script=[[[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:nil]autorelease];	
 }
 
 //NSLog(@"objects %@ %@",dObject,iObject);	
 -(QSObject *)createEvent:(QSObject *)dObject inCalendar:(QSObject *)iObject{
-	NSString *calendar=iObject?[iObject objectForType:@"QSICalCalendar"]:@"";
+//	NSString *calendar=iObject?[iObject objectForType:@"QSICalCalendar"]:@"";
 	NSString *dateString=[dObject stringValue];
 	NSString *subjectString=dateString;
 	NSArray *components=[dateString componentsSeparatedByString:@"--"];
@@ -133,20 +65,45 @@
 		subjectString=[[components objectAtIndex:1]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	}
 	NSDate *date=[NSCalendarDate dateWithNaturalLanguageString:dateString];
-	if(![[date timeZone]isEqualToTimeZone:[NSTimeZone localTimeZone]])
-		date=[date addTimeInterval:-[[NSTimeZone localTimeZone]secondsFromGMTForDate:date]];
+    date=[date dateByAddingTimeInterval:-[[NSTimeZone localTimeZone] secondsFromGMTForDate:date]];
 	if (!date) date=[NSDate date];
 	
-	NSArray *arguments=[NSArray arrayWithObjects:date,subjectString,calendar,nil];
+    CalEvent *newEvent = [CalEvent event];
+    NSArray *listOfCalendars = [[CalCalendarStore defaultCalendarStore] calendars];
+    CalCalendar *theCalendar = nil;
+    if (iObject) {
+        theCalendar = [[CalCalendarStore defaultCalendarStore] calendarWithUID:[iObject objectForMeta:@"QSiCalCalendarUID"]];
+    } else if ([listOfCalendars count]) {
+        // use a default calendar
+        theCalendar = [listOfCalendars objectAtIndex:0];
+    } else {
+        NSBeep();
+        QSiCalNotif(@"Failed to create event", @"No calendars to set the event for");
+        return nil;
+    }
+    
+    [newEvent setCalendar:theCalendar];
+    [newEvent setTitle:subjectString];
+    [newEvent setStartDate:date];
+    [newEvent setEndDate:[date dateByAddingTimeInterval:60*60]];
+    
+    NSError *err = nil;
+    [[CalCalendarStore defaultCalendarStore] saveEvent:newEvent span:CalSpanAllEvents error:&err];
+    
+    if (err) {
+        NSBeep();
+        NSLog(@"Error: %@",err);
+        return nil;
+    }
+    
+    QSiCalNotif(@"Event Created",subjectString);
+
+    
 	//-----
-	NSDictionary *dict=nil;
-	[[self script] executeSubroutine:@"create_event" arguments:arguments error:&dict];
-	if (dict)NSLog(@"Create Error: %@",dict);
 	return nil;
 }
 
 -(QSObject *)createToDo:(QSObject *)dObject inCalendar:(QSObject *)iObject{
-	NSString *calendar=iObject?[iObject objectForType:@"QSICalCalendar"]:@"";
 	NSString *dateString=[dObject stringValue];
 	NSString *subjectString=dateString;
 	NSArray *components=[dateString componentsSeparatedByString:@"--"];
@@ -154,30 +111,64 @@
 		dateString=[components objectAtIndex:0];
 		subjectString=[[components objectAtIndex:1]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	}
+    // Despite the docs recommending against this method (since it only really works for English) there's no better alternative at this time
 	NSDate *date=[NSCalendarDate dateWithNaturalLanguageString:dateString];
 	
-	if(![[date timeZone]isEqualToTimeZone:[NSTimeZone localTimeZone]])
-		date=[date addTimeInterval:-[[NSTimeZone localTimeZone]secondsFromGMTForDate:date]];
-	if ([date yearOfCommonEra]>3000) date=[NSDate date];
+    date=[date dateByAddingTimeInterval:-[[NSTimeZone localTimeZone]secondsFromGMTForDate:date]];
 	if (!date) date=[NSDate date];
 	
-	NSLog(@"date %@",date);
-	int priority=0;
-	while([subjectString hasPrefix:@"!"]){
-		subjectString=[subjectString substringFromIndex:1];
-		priority++;
-	}
+    CalTask *newTask = [CalTask task];
+    NSArray *listOfCalendars = [[CalCalendarStore defaultCalendarStore] calendars];
+    CalCalendar *theCalendar = nil;
+    if (iObject) {
+        theCalendar = [[CalCalendarStore defaultCalendarStore] calendarWithUID:[iObject objectForMeta:@"QSiCalCalendarUID"]];
+    } else if ([listOfCalendars count]) {
+        // use a default calendar
+        theCalendar = [listOfCalendars objectAtIndex:0];
+    } else {
+        NSBeep();
+        QSiCalNotif(@"Action Failed", @"No calendars to set the To-Do");
+        return nil;
+    }
+    
+    NSArray *bits = [subjectString componentsSeparatedByString:@"!"];
+    
+    // convert the number of !! at the start of the todo into a CalPriority obj
+    NSUInteger priority = [bits count];
+    CalPriority calPriority;
+    NSString *todoTitle = [[bits lastObject] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (priority == 1) {
+        calPriority = CalPriorityNone;
+    } else if (priority == 2) {
+        calPriority = CalPriorityLow;
+    } else if (priority == 3) {
+        calPriority = CalPriorityMedium;
+    } else {
+        calPriority = CalPriorityHigh;
+    }
 	
-	
-	NSArray *arguments=[NSArray arrayWithObjects:date,subjectString,[NSNumber numberWithInt:MIN(priority,3)],calendar,nil];
-	
-	//-----
-	NSDictionary *dict=nil;
-	[[self script] executeSubroutine:@"create_todo" arguments:arguments error:&dict];
-	if (dict) NSLog(@"Create Error: %@",dict);
+    [newTask setCalendar:theCalendar];
+    [newTask setTitle:todoTitle];
+    [newTask setPriority:calPriority];
+    
+    NSError *err = nil;
+    
+    [[CalCalendarStore defaultCalendarStore] saveTask:newTask error:&err];
+    
+    if (err) {
+        NSBeep();
+        NSLog(@"Error: %@",err);
+        return nil;
+    }
+
+    QSiCalNotif(@"To-Do Created",todoTitle);
 	
 	return nil;
 }
 
+void QSiCalNotif(NSString *title, NSString *message) {
+    QSShowNotifierWithAttributes([NSDictionary dictionaryWithObjectsAndKeys:@"iCalPluginNotif", QSNotifierType, [QSResourceManager imageNamed:@"com.apple.iCal"], QSNotifierIcon, NSLocalizedString(title, nil), QSNotifierTitle, NSLocalizedString(message, nil), QSNotifierText, nil]);
+
+}
 
 @end
