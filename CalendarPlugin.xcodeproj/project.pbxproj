@@ -23,7 +23,7 @@
 		14DE8BB410D0A8A800851A6F /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		80507E7015DD0FD500BBB0B0 /* bookmark.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = bookmark.icns; sourceTree = "<group>"; };
 		8D1AC9730486D14A00FE50C9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8D1AC9740486D14A00FE50C9 /* iCal Plugin.qsplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iCal Plugin.qsplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1AC9740486D14A00FE50C9 /* Calendar Plugin.qsplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Calendar Plugin.qsplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDBAD6CA10B9625E000D31A3 /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = /System/Library/Frameworks/CalendarStore.framework; sourceTree = "<absolute>"; };
 		CDDF71A41585FD2400204B71 /* QSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QSCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDDF71A51585FD2400204B71 /* QSFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QSFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,7 +84,7 @@
 		1ED78706FE9D4A0611CA0C5A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1AC9740486D14A00FE50C9 /* iCal Plugin.qsplugin */,
+				8D1AC9740486D14A00FE50C9 /* Calendar Plugin.qsplugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,9 +112,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D1AC9600486D14A00FE50C9 /* iCal Plugin */ = {
+		8D1AC9600486D14A00FE50C9 /* Calendar Plugin */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7F07B022085E433200E2AFC4 /* Build configuration list for PBXNativeTarget "iCal Plugin" */;
+			buildConfigurationList = 7F07B022085E433200E2AFC4 /* Build configuration list for PBXNativeTarget "Calendar Plugin" */;
 			buildPhases = (
 				E1022B2806B3475D00299BEC /* Update Version and Documentation */,
 				8D1AC9660486D14A00FE50C9 /* Resources */,
@@ -125,10 +125,10 @@
 			);
 			dependencies = (
 			);
-			name = "iCal Plugin";
+			name = "Calendar Plugin";
 			productInstallPath = "$(HOME)/Developer/Palettes";
 			productName = QSiCalModule;
-			productReference = 8D1AC9740486D14A00FE50C9 /* iCal Plugin.qsplugin */;
+			productReference = 8D1AC9740486D14A00FE50C9 /* Calendar Plugin.qsplugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -147,7 +147,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D1AC9600486D14A00FE50C9 /* iCal Plugin */,
+				8D1AC9600486D14A00FE50C9 /* Calendar Plugin */,
 			);
 		};
 /* End PBXProject section */
@@ -197,7 +197,7 @@
 			baseConfigurationReference = 14DE8BB310D0A8A800851A6F /* QSPlugIn.xcconfig */;
 			buildSettings = {
 				OTHER_LDFLAGS = "-bundle";
-				PRODUCT_NAME = "iCal Plugin";
+				PRODUCT_NAME = "Calendar Plugin";
 				WRAPPER_EXTENSION = qsplugin;
 			};
 			name = Release;
@@ -221,14 +221,14 @@
 			baseConfigurationReference = 14DE8BB310D0A8A800851A6F /* QSPlugIn.xcconfig */;
 			buildSettings = {
 				OTHER_LDFLAGS = "-bundle";
-				PRODUCT_NAME = "iCal Plugin";
+				PRODUCT_NAME = "Calendar Plugin";
 			};
 			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7F07B022085E433200E2AFC4 /* Build configuration list for PBXNativeTarget "iCal Plugin" */ = {
+		7F07B022085E433200E2AFC4 /* Build configuration list for PBXNativeTarget "Calendar Plugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7F07B024085E433200E2AFC4 /* Release */,
