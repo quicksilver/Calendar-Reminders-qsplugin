@@ -28,6 +28,10 @@
 	for (CalCalendar *eachItem in listOfCalendars) {
         if(!([[eachItem type] isEqualToString:@"Birthday"]))
 		{
+            if (![eachItem isEditable]) {
+                continue;
+            }
+            
             if ([action isEqualToString:kQSiCalCreateToDoAction]) {
                 // some calendars don't support adding todos, they just throw an error when you try to create a task. We have to do a bit of trickery here to determine if they can support tasks or not by attempting to add one and then listening for the err.
                 NSError *err = nil;
@@ -37,6 +41,9 @@
                 // [err code] gives 1025 when "The xxx calendar does not support tasks"
                 if (err) {
                     continue;
+                } else {
+                    // remove the test task from the calendar
+                    [[CalCalendarStore defaultCalendarStore] removeTask:testTask error:nil];
                 }
             }
             
@@ -65,7 +72,6 @@
 		subjectString=[[components objectAtIndex:1]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	}
 	NSDate *date=[NSCalendarDate dateWithNaturalLanguageString:dateString];
-    date=[date dateByAddingTimeInterval:-[[NSTimeZone localTimeZone] secondsFromGMTForDate:date]];
 	if (!date) date=[NSDate date];
 	
     CalEvent *newEvent = [CalEvent event];
