@@ -37,6 +37,9 @@
                 // [err code] gives 1025 when "The xxx calendar does not support tasks"
                 if (err) {
                     continue;
+                } else {
+                    // remove the test task from the calendar
+                    [[CalCalendarStore defaultCalendarStore] removeTask:testTask error:nil];
                 }
             }
             
