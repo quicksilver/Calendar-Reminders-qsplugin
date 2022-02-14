@@ -40,6 +40,10 @@
 			</array>
 			<key>icon</key>
 			<string>com.apple.iCal</string>
+			<key>indirectTypes</key>
+			<array>
+				<string>QSICalCalendar</string>
+			</array>
 			<key>indirectOptional</key>
 			<true/>
 			<key>name</key>
@@ -57,10 +61,16 @@
 			</array>
 			<key>icon</key>
 			<string>com.apple.iCal</string>
+			<key>indirectTypes</key>
+			<array>
+				<string>QSICalCalendar</string>
+			</array>
 			<key>indirectOptional</key>
 			<true/>
 			<key>name</key>
 			<string>Create Calendar To-Do</string>
+			<key>validatesObjects</key>
+			<string>NO</string>
 		</dict>
 	</dict>
 	<key>QSPlugIn</key>

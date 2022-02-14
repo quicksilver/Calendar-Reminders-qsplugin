@@ -83,6 +83,7 @@
 			[object setDetails:@"Calendar"];
 			[object setIcon:[QSResourceManager imageNamed:@"calendarIcon"]];
 			[object setObject:cal.title forType:@"QSICalCalendar"];
+			[object setPrimaryType:@"QSICalCalendar"];
 			[object setObject:cal.calendarIdentifier forMeta:@"QSiCalCalendarUID"];
 			return object;
 		}];
@@ -94,6 +95,7 @@
 			[object setDetails:@"Calendar"];
 			[object setIcon:[QSResourceManager imageNamed:@"calendarIcon"]];
 			[object setObject:cal.title forType:@"QSICalCalendar"];
+			[object setPrimaryType:@"QSICalCalendar"];
 			[object setObject:cal.calendarIdentifier forMeta:@"QSiCalCalendarUID"];
 			return object;
 		}];
