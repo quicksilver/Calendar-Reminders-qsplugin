@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		80507E7115DD0FD500BBB0B0 /* bookmark.icns in Resources */ = {isa = PBXBuildFile; fileRef = 80507E7015DD0FD500BBB0B0 /* bookmark.icns */; };
 		8D1AC9700486D14A00FE50C9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92D38A0106425D02CA0E72 /* Cocoa.framework */; };
-		CDBAD6CB10B9625E000D31A3 /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDBAD6CA10B9625E000D31A3 /* CalendarStore.framework */; };
+		CD3E39F727B9DBD900A226FF /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD3E39F627B9DBD900A226FF /* EventKit.framework */; };
 		CDDF71A61585FD2400204B71 /* QSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDDF71A41585FD2400204B71 /* QSCore.framework */; };
 		CDDF71A71585FD2400204B71 /* QSFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDDF71A51585FD2400204B71 /* QSFoundation.framework */; };
 		E1EAB046068128A200774DFF /* QSiCalModule.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EAB045068128A200774DFF /* QSiCalModule.m */; };
@@ -24,7 +24,7 @@
 		80507E7015DD0FD500BBB0B0 /* bookmark.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = bookmark.icns; sourceTree = "<group>"; };
 		8D1AC9730486D14A00FE50C9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1AC9740486D14A00FE50C9 /* Calendar Plugin.qsplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Calendar Plugin.qsplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CDBAD6CA10B9625E000D31A3 /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = /System/Library/Frameworks/CalendarStore.framework; sourceTree = "<absolute>"; };
+		CD3E39F627B9DBD900A226FF /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		CDDF71A41585FD2400204B71 /* QSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QSCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDDF71A51585FD2400204B71 /* QSFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QSFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD92D38A0106425D02CA0E72 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -37,8 +37,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD3E39F727B9DBD900A226FF /* EventKit.framework in Frameworks */,
 				8D1AC9700486D14A00FE50C9 /* Cocoa.framework in Frameworks */,
-				CDBAD6CB10B9625E000D31A3 /* CalendarStore.framework in Frameworks */,
 				CDDF71A61585FD2400204B71 /* QSCore.framework in Frameworks */,
 				CDDF71A71585FD2400204B71 /* QSFoundation.framework in Frameworks */,
 			);
@@ -92,10 +92,10 @@
 		2E58F364FFB232C311CA0CBA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CD3E39F627B9DBD900A226FF /* EventKit.framework */,
 				CDDF71A41585FD2400204B71 /* QSCore.framework */,
 				CDDF71A51585FD2400204B71 /* QSFoundation.framework */,
 				DD92D38A0106425D02CA0E72 /* Cocoa.framework */,
-				CDBAD6CA10B9625E000D31A3 /* CalendarStore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
