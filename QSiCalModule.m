@@ -19,8 +19,6 @@
 - (id)init {
 	if (self = [super init]) {
 		eventStore = [[EKEventStore alloc] initWithAccessToEntityTypes:(EKEntityMaskEvent | EKEntityMaskReminder)];
-		[self requestAccessForType:EKEntityTypeReminder];
-		[self requestAccessForType:EKEntityTypeEvent];
 		_eventsCalendars = nil;
 		_remindersCalendars = nil;
 	}
@@ -40,7 +38,8 @@
 			NSString *message = [NSString stringWithFormat:@"Quicksilver requires access to your %@ to edit and add %@. System preferences will now be opened for you to grant access.", type == EKEntityTypeEvent ? @"Calendars" : @"Reminders", type == EKEntityTypeEvent ? @"calendar events" : @"reminders"];
 			QSGCDMainSync(^{
 				[[NSAlert alertWithMessageText:@"Access Required" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:message] runModal];
-				[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"x-apple.systempreferences:com.apple.preference.security?Privacy"]];
+				NSString *url = [NSString stringWithFormat:@"x-apple.systempreferences:com.apple.preference.security?Privacy_%@", (type == EKEntityTypeEvent ? @"Calendars" : @"Reminders")];
+				[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url]];
 			});
 
         }
@@ -48,6 +47,7 @@
 }
 - (NSArray *)remindersCalendars {
 	if (!_remindersCalendars) {
+		[self requestAccessForType:EKEntityTypeReminder];
 		NSArray *reminders = [[eventStore calendarsForEntityType:EKEntityTypeReminder] arrayByEnumeratingArrayUsingBlock:^id(EKCalendar *cal) {
 			if (!cal.allowsContentModifications || (cal.allowedEntityTypes & EKEntityMaskReminder) != EKEntityMaskReminder) {
 				return nil;
@@ -62,6 +62,7 @@
 
 - (NSArray *)eventsCalendars {
 	if (!_eventsCalendars) {
+		[self requestAccessForType:EKEntityTypeEvent];
 		NSArray *calendars = [[eventStore calendarsForEntityType:EKEntityTypeEvent] arrayByEnumeratingArrayUsingBlock:^id(EKCalendar *cal) {
 			if (cal.type == EKCalendarTypeBirthday || !cal.allowsContentModifications || (cal.allowedEntityTypes & EKEntityMaskEvent) != EKEntityMaskEvent) {
 				return nil;
@@ -126,7 +127,7 @@
         theCalendar = [[self eventsCalendars] objectAtIndex:0];
     } else {
         NSBeep();
-        QSiCalNotif(@"Failed to create event", @"No calendars to set the event for");
+        QSiCalNotif(@"Failed to create event", @"No calendars to set the event for. Make sure Quicksilver has access to your Calendars from System Preferences → Security & Privacy");
         return nil;
     }
     
@@ -164,7 +165,7 @@
         theCalendar = [[self remindersCalendars] objectAtIndex:0];
     } else {
         NSBeep();
-        QSiCalNotif(@"Action Failed", @"No calendars to set the To-Do");
+        QSiCalNotif(@"Action Failed", @"No Reminders list available to add the reminder. Make sure Quicksilver has access to Reminders from System Preferences → Security & Privacy");
         return nil;
     }
     
