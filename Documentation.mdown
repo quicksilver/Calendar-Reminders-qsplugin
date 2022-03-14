@@ -1,6 +1,10 @@
-## Calendar Plugin
+## Calendar & Reminders Plugin
 
-This plugin adds actions for creating events and To-Dos from Quicksilver
+This plugin adds actions for creating Calendar Events (Calendar.app) and Reminders (Reminders.app) from within Quicksilver
+
+### Permissions
+
+This plugin requires access to your Calendar and Reminders. Make sure you have granted Quicksilver permissions by adding it to the [Calendars list](x-apple.systempreferences:com.apple.preference.security?Privacy_Calendars) and [Reminders list](x-apple.systempreferences:com.apple.preference.security?Privacy_Reminders) in the System Preferences.
 
 ### Actions
 
@@ -12,14 +16,14 @@ Examples of text could be `Dinner with Tom next Tuesday` or `Visit mum at 3pm`.
 You can improve how an event displays in your Calendar by separating the name of the event and the time it takes place with two dashes `--`  
 Using `Next Tuesday -- Dinner with Tom` will create an event called just `Dinner with Tom` in your calendar.
 
-**Create Calendar To-Do**
+**Create Reminder**
 
-This action takes text from Quicksilver's 1st pane, and adds it as an To-Do to your selected Calendar in Quicksilver's 3rd pane.    
-If you do not see all your calendars appear in Quicksilver's 3rd pane, this is because not all calendars support To-Dos.  
+This action takes text from Quicksilver's 1st pane, and adds it as a Reminder to your selected Reminders List in Quicksilver's 3rd pane.
+
 Examples of text could be `Do the shopping` or `Pick up the kids from school`.
 
 You can set the priority of an event by prefixing your event with any number of exclamation marks `!`  
-*One* exclamantion mark gives the To-Do a *low* priority, *two* give the To-Do a *medium* priority and *three* gives it a *high* priority.
+*One* exclamantion mark gives the Reminder a *low* priority, *two* give the Reminder a *medium* priority and *three* gives it a *high* priority.
 
-`!! This is a medium priority todo`  
-`This todo has no priority set`
+`!! This is a medium priority reminder`  
+`This reminder has no priority set`
