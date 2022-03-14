@@ -46,8 +46,8 @@
     }];
 }
 - (NSArray *)remindersCalendars {
-	[self requestAccessForType:EKEntityTypeReminder];
 	if (!_remindersCalendars) {
+		[self requestAccessForType:EKEntityTypeReminder];
 		NSArray *reminders = [[eventStore calendarsForEntityType:EKEntityTypeReminder] arrayByEnumeratingArrayUsingBlock:^id(EKCalendar *cal) {
 			if (!cal.allowsContentModifications || (cal.allowedEntityTypes & EKEntityMaskReminder) != EKEntityMaskReminder) {
 				return nil;
@@ -61,8 +61,8 @@
 }
 
 - (NSArray *)eventsCalendars {
-	[self requestAccessForType:EKEntityTypeEvent];
 	if (!_eventsCalendars) {
+		[self requestAccessForType:EKEntityTypeEvent];
 		NSArray *calendars = [[eventStore calendarsForEntityType:EKEntityTypeEvent] arrayByEnumeratingArrayUsingBlock:^id(EKCalendar *cal) {
 			if (cal.type == EKCalendarTypeBirthday || !cal.allowsContentModifications || (cal.allowedEntityTypes & EKEntityMaskEvent) != EKEntityMaskEvent) {
 				return nil;
