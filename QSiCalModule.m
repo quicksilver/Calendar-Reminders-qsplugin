@@ -75,30 +75,28 @@
 	return _eventsCalendars;
 }
 
+- (QSObject *)objectFromCalendar:(EKCalendar *)cal {
+	QSObject *object = [QSObject objectWithName:cal.title];
+	NSString *details = cal.source.title ? [NSString stringWithFormat:NSLocalizedString(@"Calendar (%@)", @"Details of calendar Object - arg is the title of the calendar"), cal.source.title] : NSLocalizedString(@"Calendar", @"Defailt details name");
+	[object setDetails:details];
+	[object setIcon:[QSResourceManager imageNamed:@"calendarIcon"]];
+	[object setObject:cal.title forType:@"QSICalCalendar"];
+	[object setPrimaryType:@"QSICalCalendar"];
+	[object setObject:cal.calendarIdentifier forMeta:@"QSiCalCalendarUID"];
+	return object;
+}
 - (NSArray *)validIndirectObjectsForAction:(NSString *)action directObject:(QSObject *)dObject{
 
 	if ([action isEqualToString:kQSiCalCreateToDoAction]) {
 		NSArray *reminderCalendars = [self remindersCalendars];
 		NSArray *objs = [reminderCalendars arrayByEnumeratingArrayUsingBlock:^id(EKCalendar *cal) {
-			QSObject *object = [QSObject objectWithName:cal.title];
-			[object setDetails:@"Calendar"];
-			[object setIcon:[QSResourceManager imageNamed:@"calendarIcon"]];
-			[object setObject:cal.title forType:@"QSICalCalendar"];
-			[object setPrimaryType:@"QSICalCalendar"];
-			[object setObject:cal.calendarIdentifier forMeta:@"QSiCalCalendarUID"];
-			return object;
+			return [self objectFromCalendar:cal];
 		}];
 		return objs;
 	} else if ([action isEqualToString:@"QSiCalCreateEventAction"]) {
 		NSArray *eventsCalendars = [self eventsCalendars];
 		NSArray *objs = [eventsCalendars arrayByEnumeratingArrayUsingBlock:^id(EKCalendar *cal) {
-			QSObject *object = [QSObject objectWithName:cal.title];
-			[object setDetails:@"Calendar"];
-			[object setIcon:[QSResourceManager imageNamed:@"calendarIcon"]];
-			[object setObject:cal.title forType:@"QSICalCalendar"];
-			[object setPrimaryType:@"QSICalCalendar"];
-			[object setObject:cal.calendarIdentifier forMeta:@"QSiCalCalendarUID"];
-			return object;
+			return [self objectFromCalendar:cal];
 		}];
 		return objs;
 	}

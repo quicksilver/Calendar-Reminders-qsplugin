@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2.2</string>
+	<string>1.2.3</string>
 	<key>CFBundleVersion</key>
-	<string>125</string>
+	<string>126</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Create and view calendar items from within Quicksilver</string>
 	<key>NSPrincipalClass</key>
