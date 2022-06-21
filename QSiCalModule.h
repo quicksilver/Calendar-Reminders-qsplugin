@@ -8,7 +8,7 @@
 
 #import "QSiCalModule.h"
 #import <EventKit/EventKit.h>
-@interface QSiCalModule : NSObject
+@interface QSiCalModule : QSObjectSource
 {
 	EKEventStore *eventStore;
 	NSArray * _remindersCalendars;

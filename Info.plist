@@ -49,6 +49,33 @@
 			<key>name</key>
 			<string>Create Calendar Event</string>
 		</dict>
+		<key>QSiCalCreateEventActionReverse</key>
+		<dict>
+			<key>actionClass</key>
+			<string>QSiCalModule</string>
+			<key>actionSelector</key>
+			<string>createEvent:inCalendar:</string>
+			<key>directTypes</key>
+			<array>
+				<string>QSICalCalendar</string>
+			</array>
+			<key>icon</key>
+			<string>com.apple.iCal</string>
+			<key>indirectOptional</key>
+			<false/>
+			<key>indirectTypes</key>
+			<array>
+				<string>NSStringPboardType</string>
+			</array>
+			<key>name</key>
+			<string>Add Event...</string>
+			<key>precedence</key>
+			<integer>4</integer>
+			<key>reverseArguments</key>
+			<true/>
+			<key>validatesObjects</key>
+			<string></string>
+		</dict>
 		<key>QSiCalCreateToDoAction</key>
 		<dict>
 			<key>actionClass</key>
@@ -71,6 +98,33 @@
 			<string>Create Reminder</string>
 			<key>validatesObjects</key>
 			<string>NO</string>
+		</dict>
+		<key>QSiCalCreateToDoActionReverse</key>
+		<dict>
+			<key>actionClass</key>
+			<string>QSiCalModule</string>
+			<key>actionSelector</key>
+			<string>createToDo:inCalendar:</string>
+			<key>directTypes</key>
+			<array>
+				<string>QSICalCalendar</string>
+			</array>
+			<key>icon</key>
+			<string>com.apple.reminders</string>
+			<key>indirectOptional</key>
+			<false/>
+			<key>indirectTypes</key>
+			<array>
+				<string>NSStringPboardType</string>
+			</array>
+			<key>name</key>
+			<string>Add Reminder...</string>
+			<key>validatesObjects</key>
+			<string>YES</string>
+			<key>reverseArgumetns</key>
+			<true/>
+			<key>precedence</key>
+			<integer>4</integer>
 		</dict>
 	</dict>
 	<key>QSPlugIn</key>
@@ -108,8 +162,25 @@ Using &lt;code&gt;Next Tuesday -- Dinner with Tom&lt;/code&gt; will create an ev
 	</dict>
 	<key>QSRegistration</key>
 	<dict>
+		<key>QSTypeDefinitions</key>
+		<dict>
+			<key>QSICalCalendar</key>
+			<dict>
+				<key>icon</key>
+				<string>calendarIcon</string>
+				<key>name</key>
+				<string>Calendars</string>
+			</dict>
+		</dict>
 		<key>QSBundleDrawingHandlers</key>
 		<dict>
+			<key>com.apple.iCal</key>
+			<string>QSiCalModule</string>
+		</dict>
+		<key>QSBundleChildHandlers</key>
+		<dict>
+			<key>com.apple.reminders</key>
+			<string>QSiCalModule</string>
 			<key>com.apple.iCal</key>
 			<string>QSiCalModule</string>
 		</dict>

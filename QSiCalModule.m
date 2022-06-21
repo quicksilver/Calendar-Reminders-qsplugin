@@ -75,7 +75,7 @@
 	return _eventsCalendars;
 }
 
-- (QSObject *)objectFromCalendar:(EKCalendar *)cal {
+- (QSObject *)objectFromCalendar:(EKCalendar *)cal reminder:(BOOL)reminder {
 	QSObject *object = [QSObject objectWithName:cal.title];
 	NSString *details = cal.source.title ? [NSString stringWithFormat:NSLocalizedString(@"Calendar (%@)", @"Details of calendar Object - arg is the title of the calendar"), cal.source.title] : NSLocalizedString(@"Calendar", @"Defailt details name");
 	[object setDetails:details];
@@ -83,24 +83,43 @@
 	[object setObject:cal.title forType:@"QSICalCalendar"];
 	[object setPrimaryType:@"QSICalCalendar"];
 	[object setObject:cal.calendarIdentifier forMeta:@"QSiCalCalendarUID"];
+    [object setObject:reminder ? @"reminder" : @"calendar" forMeta:@"QSiCalCalendarType"];
 	return object;
+}
+
+- (NSArray *)calendarObjects {
+    NSArray *eventsCalendars = [self eventsCalendars];
+    return [eventsCalendars arrayByEnumeratingArrayUsingBlock:^id(EKCalendar *cal) {
+        return [self objectFromCalendar:cal reminder:NO];
+    }];
+}
+
+- (NSArray *)remindersObjects {
+    NSArray *reminderCalendars = [self remindersCalendars];
+    return [reminderCalendars arrayByEnumeratingArrayUsingBlock:^id(EKCalendar *cal) {
+        return [self objectFromCalendar:cal reminder:YES];
+    }];
+}
+- (NSArray *)validActionsForDirectObject:(QSObject *)dObject indirectObject:(QSObject *)iObject {
+    if ([[dObject primaryType] isEqualToString:@"QSICalCalendar"]) {
+        NSString *type = [dObject objectForMeta:@"QSiCalCalendarType"];
+        if ([type isEqualToString:@"reminder"]) {
+            return @[@"QSiCalCreateToDoActionReverse"];
+        } else if ([type isEqualToString:@"calendar"]) {
+            return @[@"QSiCalCreateEventActionReverse"];
+        }
+    }
+    return nil;
 }
 - (NSArray *)validIndirectObjectsForAction:(NSString *)action directObject:(QSObject *)dObject{
 
 	if ([action isEqualToString:kQSiCalCreateToDoAction]) {
-		NSArray *reminderCalendars = [self remindersCalendars];
-		NSArray *objs = [reminderCalendars arrayByEnumeratingArrayUsingBlock:^id(EKCalendar *cal) {
-			return [self objectFromCalendar:cal];
-		}];
-		return objs;
+		return [self remindersObjects];
 	} else if ([action isEqualToString:@"QSiCalCreateEventAction"]) {
-		NSArray *eventsCalendars = [self eventsCalendars];
-		NSArray *objs = [eventsCalendars arrayByEnumeratingArrayUsingBlock:^id(EKCalendar *cal) {
-			return [self objectFromCalendar:cal];
-		}];
-		return objs;
+        return [self calendarObjects];
 	}
-	return nil;
+    // 3rd pane is text
+	return @[[QSObject textProxyObjectWithDefaultValue:@""]];
 }
 
 //NSLog(@"objects %@ %@",dObject,iObject);
@@ -206,4 +225,40 @@ void QSiCalNotif(NSString *title, NSString *message) {
     
 }
 
+#pragma mark Calendar/Reminders Right arrow in
+
+- (BOOL)indexIsValidFromDate:(NSDate *)indexDate forEntry:(NSDictionary *)theEntry{
+    return YES;
+}
+
+- (NSImage *) iconForEntry:(NSDictionary *)dict{
+    return nil;
+}
+
+
+- (NSArray *) objectsForEntry:(NSDictionary *)theEntry{
+    return nil;
+    
+}
+
+- (BOOL)loadChildrenForObject:(QSObject *)object {
+    if ([[[NSBundle bundleWithPath:[object singleFilePath]] bundleIdentifier] isEqualToString:@"com.apple.iCal"]) {
+        [object setChildren:[self calendarObjects]];
+        return YES;
+    } else {
+        [object setChildren:[self remindersObjects]];
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark Object Source
+
+- (void)setQuickIconForObject:(QSObject *)object {
+    NSString *type = [object objectForMeta:@"QSiCalCalendarType"];
+    if ([type isEqualToString:@"reminder"]) {
+        [object setIcon:[QSResourceManager imageNamed:@"calendarIcon"]];
+    }
+    [object setIcon:[QSResourceManager imageNamed:@"calendarIcon"]];
+}
 @end
