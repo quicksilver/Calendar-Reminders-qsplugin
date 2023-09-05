@@ -162,6 +162,24 @@ Using &lt;code&gt;Next Tuesday -- Dinner with Tom&lt;/code&gt; will create an ev
 	</dict>
 	<key>QSRegistration</key>
 	<dict>
+		<key>QSPreferencePanes</key>
+		<dict>
+			<key>CalendarPrefPane</key>
+			<dict>
+				<key>class</key>
+				<string>CalendarPrefPane</string>
+				<key>description</key>
+				<string>Calendar &amp; Reminders Settings</string>
+				<key>icon</key>
+				<string>calendarIcon</string>
+				<key>name</key>
+				<string>Calendar</string>
+				<key>nibBundle</key>
+				<string>com.blacktree.Quicksilver.QSiCalModule</string>
+				<key>nibName</key>
+				<string>CalendarPrefPane</string>
+			</dict>
+		</dict>
 		<key>QSTypeDefinitions</key>
 		<dict>
 			<key>QSICalCalendar</key>

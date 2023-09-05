@@ -25,6 +25,14 @@
 	return self;
 }
 
++(id)sharedInstance{
+    static id _sharedInstance;
+    if (!_sharedInstance){
+        _sharedInstance = [[[self class] allocWithZone:[self zone]] init];
+    }
+    return _sharedInstance;
+}
+
 - (void)dealloc {
 	[eventStore release];
 	[super dealloc];
@@ -77,9 +85,10 @@
 
 - (QSObject *)objectFromCalendar:(EKCalendar *)cal reminder:(BOOL)reminder {
 	QSObject *object = [QSObject objectWithName:cal.title];
-	NSString *details = cal.source.title ? [NSString stringWithFormat:NSLocalizedString(@"Calendar (%@)", @"Details of calendar Object - arg is the title of the calendar"), cal.source.title] : NSLocalizedString(@"Calendar", @"Defailt details name");
+	NSString *details = cal.source.title ? [NSString stringWithFormat:NSLocalizedString(@"Calendar (%@)", @"Details of calendar Object - arg is the title of the calendar"), cal.source.title] : NSLocalizedString(@"Calendar", @"Default details name");
 	[object setDetails:details];
 	[object setIcon:[QSResourceManager imageNamed:@"calendarIcon"]];
+    [object setIdentifier:cal.calendarIdentifier];
 	[object setObject:cal.title forType:@"QSICalCalendar"];
 	[object setPrimaryType:@"QSICalCalendar"];
 	[object setObject:cal.calendarIdentifier forMeta:@"QSiCalCalendarUID"];
@@ -112,11 +121,29 @@
     return nil;
 }
 - (NSArray *)validIndirectObjectsForAction:(NSString *)action directObject:(QSObject *)dObject{
-
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if ([action isEqualToString:kQSiCalCreateToDoAction]) {
-		return [self remindersObjects];
+		NSArray *a = [self remindersObjects];
+        if ([defaults objectForKey:@"QSiCalDefaultReminderCalendar"]) {
+            NSUInteger i = [a indexOfObjectPassingTest:^BOOL(QSObject *obj, NSUInteger idx, BOOL *stop) {
+                return [[obj objectForMeta:@"QSiCalCalendarUID"] isEqualToString:[defaults objectForKey:@"QSiCalDefaultReminderCalendar"]];
+            }];
+            if (i != NSNotFound) {
+                return [NSArray arrayWithObjects:[a objectAtIndex:i], a, nil];
+            }
+        }
+        return a;
 	} else if ([action isEqualToString:@"QSiCalCreateEventAction"]) {
-        return [self calendarObjects];
+        NSArray *a = [self calendarObjects];
+        if ([defaults objectForKey:@"QSiCalDefaultCalendar"]) {
+            NSUInteger i = [a indexOfObjectPassingTest:^BOOL(QSObject *obj, NSUInteger idx, BOOL *stop) {
+                return [[obj objectForMeta:@"QSiCalCalendarUID"] isEqualToString:[defaults objectForKey:@"QSiCalDefaultCalendar"]];
+            }];
+            if (i != NSNotFound) {
+                return [NSArray arrayWithObjects:[a objectAtIndex:i], a, nil];
+            }
+        }
+        return a;
 	}
     // 3rd pane is text
 	return @[[QSObject textProxyObjectWithDefaultValue:@""]];

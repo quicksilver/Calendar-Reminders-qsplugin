@@ -11,8 +11,11 @@
 @interface QSiCalModule : QSObjectSource
 {
 	EKEventStore *eventStore;
-	NSArray * _remindersCalendars;
-	NSArray * _eventsCalendars;
+    NSArray *_eventsCalendars;
+    NSArray *_remindersCalendars;
 }
++(id)sharedInstance;
+- (NSArray *)eventsCalendars;
+- (NSArray *)remindersCalendars;
 @end
 
