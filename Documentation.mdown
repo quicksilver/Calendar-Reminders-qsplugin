@@ -27,3 +27,8 @@ You can set the priority of an event by prefixing your event with any number of 
 
 `!! This is a medium priority reminder`  
 `This reminder has no priority set`
+
+
+### Default Calendars for Events/Reminders
+
+You can select the default calendar for Events/Reminders by going to Preferences > Calendars in the Quicksilver preferences
