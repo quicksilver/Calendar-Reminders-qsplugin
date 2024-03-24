@@ -7,7 +7,7 @@
 //
 
 #import "QSiCalModule.h"
-
+#import "Chrono.h"
 
 #define dayAttributes [NSDictionary dictionaryWithObjectsAndKeys:style,NSParagraphStyleAttributeName,[NSFont fontWithName:@"Helvetica Bold" size:54], NSFontAttributeName,[NSColor colorWithCalibratedWhite:0.2 alpha:1.0],NSForegroundColorAttributeName,nil]
 #define monthAttributes [NSDictionary dictionaryWithObjectsAndKeys:style2,NSParagraphStyleAttributeName,[NSNumber numberWithFloat:0.0],NSKernAttributeName,[NSFont fontWithName:@"Helvetica Bold" size:14], NSFontAttributeName,[NSColor whiteColor],NSForegroundColorAttributeName,nil]
@@ -21,6 +21,7 @@
 		eventStore = [[EKEventStore alloc] initWithAccessToEntityTypes:(EKEntityMaskEvent | EKEntityMaskReminder)];
 		_eventsCalendars = nil;
 		_remindersCalendars = nil;
+        [[Chrono sharedInstance] parse:@"tomorrow morning at 8am"];
 	}
 	return self;
 }
@@ -159,8 +160,14 @@
 		dateString=[components objectAtIndex:0];
 		subjectString=[[components objectAtIndex:1]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	}
-	NSDate *date=[NSCalendarDate dateWithNaturalLanguageString:dateString];
-	if (!date) date=[NSDate date];
+    
+    NSDate *date = [[Chrono sharedInstance] parse:dateString];
+    if (!date) {
+        NSDate *date=[NSCalendarDate dateWithNaturalLanguageString:dateString];
+    }
+    if (!date) {
+        date = [NSDate date];
+    }
 	
     EKEvent *newEvent = [EKEvent eventWithEventStore:eventStore];
     EKCalendar *theCalendar = nil;
@@ -190,6 +197,22 @@
     }
     
     QSiCalNotif(@"Event Created",subjectString);
+//    // get the value of 'QSShowEventAfterCreation' from the NSUserDefaults
+//     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"QSShowEventAfterCreation"]) {
+//         CalendarApplication *calendarApp = [SBApplication applicationWithBundleIdentifier:@"com.apple.ical"];
+//         [[calendarApp calendars] enumerateObjectsUsingBlock:^(CalendarCalendar * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//             if ([[obj calendarIdentifier] isEqualToString:theCalendar.calendarIdentifier]) {
+//                 [[obj events] enumerateObjectsUsingBlock:^(CalendarEvent * _Nonnull anEvent, NSUInteger idx, BOOL * _Nonnull stop2) {
+//                     if ([[anEvent uid] isEqualToString:newEvent.eventIdentifier]) {
+//                         [anEvent show];
+//                         *stop2 = YES;
+//                         *stop = YES;
+//                         return;
+//                     }
+//                 }];
+//             }
+//         }];
+//    }
     
     
 	//-----
