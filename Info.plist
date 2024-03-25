@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.4.0</string>
 	<key>CFBundleVersion</key>
-	<string>140</string>
+	<string>141</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Create and view calendar items from within Quicksilver</string>
 	<key>NSPrincipalClass</key>
