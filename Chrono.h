@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 +(id)sharedInstance;
--(NSDate *)parse:(NSString *)phrase;
+-(NSDate *)parse:(NSString *)phrase withLocale:(NSString *)locale;
 
 @end
 

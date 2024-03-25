@@ -21,7 +21,6 @@
 		eventStore = [[EKEventStore alloc] initWithAccessToEntityTypes:(EKEntityMaskEvent | EKEntityMaskReminder)];
 		_eventsCalendars = nil;
 		_remindersCalendars = nil;
-        [[Chrono sharedInstance] parse:@"tomorrow morning at 8am"];
 	}
 	return self;
 }
@@ -161,7 +160,7 @@
 		subjectString=[[components objectAtIndex:1]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	}
     
-    NSDate *date = [[Chrono sharedInstance] parse:dateString];
+    NSDate *date = [[Chrono sharedInstance] parse:dateString withLocale:[[NSLocale currentLocale] languageCode]];
     if (!date) {
         NSDate *date=[NSCalendarDate dateWithNaturalLanguageString:dateString];
     }

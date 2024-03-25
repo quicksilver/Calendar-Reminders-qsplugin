@@ -28,10 +28,13 @@
     return _sharedInstance;
 }
 
--(NSDate *)parse:(NSString *)phrase {
+-(NSDate *)parse:(NSString *)phrase withLocale:(NSString *)locale {
     JSValue *v = [[c objectForKeyedSubscript:@"Chrono"] objectForKeyedSubscript:@"Chrono"];
-    JSValue *result = [v invokeMethod:@"parse" withArguments:@[phrase]];
-    return [result toDate];
-
+    JSValue *result = [v invokeMethod:@"parse" withArguments:@[phrase, locale]];
+    // chrono returns a nil string if it can't parse the info
+    if ([result toString]) {
+        return [result toDate];
+    }
+    return nil;
 }
 @end
