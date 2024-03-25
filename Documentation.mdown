@@ -14,7 +14,7 @@ This action takes text from Quicksilver's 1st pane, and adds it as an event to y
 Examples of text could be `Dinner with Tom next Tuesday` or `Visit mum at 3pm`.
 
 You can improve how an event displays in your Calendar by separating the name of the event and the time it takes place with two dashes `--`  
-Using `Next Tuesday -- Dinner with Tom` will create an event called just `Dinner with Tom` in your calendar.
+Using `Next Tuesday -- Dinner with Tom` will create an event called just `Dinner with Tom` in your calendar. Supported languages include English, Japanese, French, Dutch, Russian, English (UK) with partial support for German, Portuguese and Chinese, thanks to the [Chrono project](https://github.com/wanasit/chrono)
 
 **Create Reminder**
 
@@ -32,3 +32,8 @@ You can set the priority of an event by prefixing your event with any number of 
 ### Default Calendars for Events/Reminders
 
 You can select the default calendar for Events/Reminders by going to Preferences > Calendars in the Quicksilver preferences
+
+
+### Open Source Licenses
+
+This project uses code from the [Chrono Project: The MIT License](https://raw.githubusercontent.com/wanasit/chrono/master/LICENSE.txt)
