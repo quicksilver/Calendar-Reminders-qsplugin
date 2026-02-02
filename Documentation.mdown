@@ -28,12 +28,16 @@ You can set the priority of an event by prefixing your event with any number of 
 `!! This is a medium priority reminder`  
 `This reminder has no priority set`
 
+### Next Online Meeting Object
+
+This plugin adds a 'Next online meeting' object to your catalog. Use it to find an upcoming meeting (within the next 30 minutes) on your calendar. It will automatically retrieve the URL from the calendar information for you to open.
 
 ### Default Calendars for Events/Reminders
 
 You can select the default calendar for Events/Reminders by going to Preferences > Calendars in the Quicksilver preferences
 
-
 ### Open Source Licenses
 
-This project uses code from the [Chrono Project: The MIT License](https://raw.githubusercontent.com/wanasit/chrono/master/LICENSE.txt)
+This project uses code from:
+* [Chrono Project](https://github.com/wanasit/chrono/blob/master/LICENSE.txt)
+* [Meeting Bar Project](https://github.com/leits/MeetingBar/blob/master/LICENSE)

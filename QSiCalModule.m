@@ -328,7 +328,7 @@ void QSiCalNotif(NSString *title, NSString *message) {
 
 - (QSObject *)resolveProxyObject:(QSProxyObject *)proxy
 {
-	NSUInteger minutesForward = 180;
+	NSUInteger minutesForward = 30;
 	NSUInteger interval = minutesForward * 60;
 	NSDate *now = [NSDate date];
 	NSDate *cutoff = [NSDate dateWithTimeIntervalSinceNow:interval];
