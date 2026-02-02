@@ -8,6 +8,7 @@
 
 #import "QSiCalModule.h"
 #import "Chrono.h"
+#import "QSMeetingResolver.h"
 
 #define dayAttributes [NSDictionary dictionaryWithObjectsAndKeys:style,NSParagraphStyleAttributeName,[NSFont fontWithName:@"Helvetica Bold" size:54], NSFontAttributeName,[NSColor colorWithCalibratedWhite:0.2 alpha:1.0],NSForegroundColorAttributeName,nil]
 #define monthAttributes [NSDictionary dictionaryWithObjectsAndKeys:style2,NSParagraphStyleAttributeName,[NSNumber numberWithFloat:0.0],NSKernAttributeName,[NSFont fontWithName:@"Helvetica Bold" size:14], NSFontAttributeName,[NSColor whiteColor],NSForegroundColorAttributeName,nil]
@@ -162,7 +163,7 @@
     
     NSDate *date = [[Chrono sharedInstance] parse:dateString withLocale:[[NSLocale currentLocale] languageCode]];
     if (!date) {
-        NSDate *date=[NSCalendarDate dateWithNaturalLanguageString:dateString];
+        NSDate *date = [NSCalendarDate dateWithNaturalLanguageString:dateString];
     }
     if (!date) {
         date = [NSDate date];
@@ -290,7 +291,19 @@ void QSiCalNotif(NSString *title, NSString *message) {
     
 }
 
+- (BOOL)loadIconForObject:(QSObject *)object {
+	if ([object isProxyObject]) {
+		return [object icon];
+		return YES;
+	}
+	return NO;
+}
+
+
 - (BOOL)loadChildrenForObject:(QSObject *)object {
+	if ([object isProxyObject]) {
+		return NO;
+	}
     if ([[[NSBundle bundleWithPath:[object singleFilePath]] bundleIdentifier] isEqualToString:@"com.apple.iCal"]) {
         [object setChildren:[self calendarObjects]];
         return YES;
@@ -310,4 +323,53 @@ void QSiCalNotif(NSString *title, NSString *message) {
     }
     [object setIcon:[QSResourceManager imageNamed:@"calendarIcon"]];
 }
+
+# pragma mark Proxy Objects
+
+- (QSObject *)resolveProxyObject:(QSProxyObject *)proxy
+{
+	NSUInteger minutesForward = 180;
+	NSUInteger interval = minutesForward * 60;
+	NSDate *now = [NSDate date];
+	NSDate *cutoff = [NSDate dateWithTimeIntervalSinceNow:interval];
+	NSPredicate *query = [eventStore predicateForEventsWithStartDate:now endDate:cutoff calendars:nil];
+	NSArray *events = [eventStore eventsMatchingPredicate:query];
+	// pick the meeting event that hasn't started
+	EKEvent *targetEvent = nil;
+	NSDictionary *targetData;
+	for (EKEvent *upcomingEvent in events) {
+		NSDictionary *meetingData = meetingDataFromEvent(upcomingEvent);
+		if (!meetingData) {
+			// skip events with no meeting URL
+			continue;
+		}
+		if ([[upcomingEvent startDate] compare:now] == NSOrderedDescending) {
+			// prefer an event in the future
+			targetData = meetingData;
+			targetEvent = upcomingEvent;
+			break;
+		}
+		targetData = meetingData;
+		targetEvent = upcomingEvent;
+	}
+	if (targetEvent) {
+		return objectFromEvent(targetEvent, targetData);
+	}
+	return nil;
+}
+
+- (NSString *)detailsOfObject:(QSObject *)object
+{
+	return [[object resolvedObject] objectForMeta:@"meetingDescription"];
+}
+
+- (NSArray *)typesForProxyObject:(id)proxy
+{
+	return @[QSURLType];
+}
+
+- (NSTimeInterval)cacheTimeForProxy:(id)proxy {
+		return 3.0f;
+}
+
 @end

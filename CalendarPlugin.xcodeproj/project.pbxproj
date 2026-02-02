@@ -16,6 +16,9 @@
 		CD24787C2BAFDA6A005F2BA7 /* Chrono.m in Sources */ = {isa = PBXBuildFile; fileRef = CD24787B2BAFDA6A005F2BA7 /* Chrono.m */; };
 		CD24787E2BAFDACC005F2BA7 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD24787D2BAFDACC005F2BA7 /* JavaScriptCore.framework */; };
 		CD3E39F727B9DBD900A226FF /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD3E39F627B9DBD900A226FF /* EventKit.framework */; };
+		CD6329722F3099AF007D0601 /* QSMeetingResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = CD6329712F3099AF007D0601 /* QSMeetingResolver.m */; };
+		CD6329742F313E7D007D0601 /* MeetingServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6329732F313E7D007D0601 /* MeetingServices.swift */; };
+		CD632F792F31427C007D0601 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD632F782F31427C007D0601 /* Assets.xcassets */; };
 		CDDF71A61585FD2400204B71 /* QSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDDF71A41585FD2400204B71 /* QSCore.framework */; };
 		CDDF71A71585FD2400204B71 /* QSFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDDF71A51585FD2400204B71 /* QSFoundation.framework */; };
 		E1EAB046068128A200774DFF /* QSiCalModule.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EAB045068128A200774DFF /* QSiCalModule.m */; };
@@ -39,6 +42,10 @@
 		CD24787B2BAFDA6A005F2BA7 /* Chrono.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Chrono.m; sourceTree = "<group>"; };
 		CD24787D2BAFDACC005F2BA7 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		CD3E39F627B9DBD900A226FF /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		CD6329702F3099AF007D0601 /* QSMeetingResolver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QSMeetingResolver.h; sourceTree = "<group>"; };
+		CD6329712F3099AF007D0601 /* QSMeetingResolver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QSMeetingResolver.m; sourceTree = "<group>"; };
+		CD6329732F313E7D007D0601 /* MeetingServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingServices.swift; sourceTree = "<group>"; };
+		CD632F782F31427C007D0601 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CDDF71A41585FD2400204B71 /* QSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QSCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDDF71A51585FD2400204B71 /* QSFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QSFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD92D38A0106425D02CA0E72 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -66,6 +73,7 @@
 		0259C574FE90428111CA0C5A /* QSiCalModule */ = {
 			isa = PBXGroup;
 			children = (
+				CD632F782F31427C007D0601 /* Assets.xcassets */,
 				14DE8BA410D0A88700851A6F /* Configuration */,
 				32DBCF9E0370C38000C91783 /* Classes */,
 				0259C582FE90428111CA0C5A /* Resources */,
@@ -123,6 +131,9 @@
 		32DBCF9E0370C38000C91783 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				CD6329732F313E7D007D0601 /* MeetingServices.swift */,
+				CD6329702F3099AF007D0601 /* QSMeetingResolver.h */,
+				CD6329712F3099AF007D0601 /* QSMeetingResolver.m */,
 				CD1FDFB22AA71AC700D64E12 /* CalendarPrefPane.h */,
 				CD1FDFB32AA71AC700D64E12 /* CalendarPrefPane.m */,
 				E1EAB047068128A800774DFF /* QSiCalModule.h */,
@@ -163,6 +174,7 @@
 				LastUpgradeCheck = 0440;
 				TargetAttributes = {
 					8D1AC9600486D14A00FE50C9 = {
+						LastSwiftMigration = 1640;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -191,6 +203,7 @@
 			files = (
 				CD1FDFAA2AA7178000D64E12 /* CalendarPrefPane.xib in Resources */,
 				CD2478792BAFDA4B005F2BA7 /* Chrono.bundle.js in Resources */,
+				CD632F792F31427C007D0601 /* Assets.xcassets in Resources */,
 				80507E7115DD0FD500BBB0B0 /* bookmark.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -202,9 +215,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD6329722F3099AF007D0601 /* QSMeetingResolver.m in Sources */,
 				CD1FDFB42AA71AC700D64E12 /* CalendarPrefPane.m in Sources */,
 				CD24787C2BAFDA6A005F2BA7 /* Chrono.m in Sources */,
 				E1EAB046068128A200774DFF /* QSiCalModule.m in Sources */,
+				CD6329742F313E7D007D0601 /* MeetingServices.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,9 +230,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 14DE8BB310D0A8A800851A6F /* QSPlugIn.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				OTHER_LDFLAGS = "-bundle";
 				PRODUCT_NAME = "Calendar Plugin";
+				SWIFT_VERSION = 6.0;
 				WRAPPER_EXTENSION = qsplugin;
 			};
 			name = Release;
@@ -240,9 +257,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 14DE8BB310D0A8A800851A6F /* QSPlugIn.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				OTHER_LDFLAGS = "-bundle";
 				PRODUCT_NAME = "Calendar Plugin";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};

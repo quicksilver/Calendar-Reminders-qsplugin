@@ -162,6 +162,18 @@ Using &lt;code&gt;Next Tuesday -- Dinner with Tom&lt;/code&gt; will create an ev
 	</dict>
 	<key>QSRegistration</key>
 	<dict>
+		<key>QSProxies</key>
+		<dict>
+			<key>NextCalendarMeeting</key>
+			<dict>
+				<key>icon</key>
+				<string>ProxyIcon</string>
+				<key>name</key>
+				<string>Next Online Meeting</string>
+				<key>providerClass</key>
+				<string>QSiCalModule</string>
+			</dict>
+		</dict>
 		<key>QSPreferencePanes</key>
 		<dict>
 			<key>CalendarPrefPane</key>
