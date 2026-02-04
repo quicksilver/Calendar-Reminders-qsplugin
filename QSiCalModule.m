@@ -19,7 +19,7 @@
 
 - (id)init {
 	if (self = [super init]) {
-		eventStore = [[EKEventStore alloc] initWithAccessToEntityTypes:(EKEntityMaskEvent | EKEntityMaskReminder)];
+		eventStore = [[EKEventStore alloc] init];
 		_eventsCalendars = nil;
 		_remindersCalendars = nil;
 	}
@@ -331,10 +331,10 @@ void QSiCalNotif(NSString *title, NSString *message) {
 	NSUInteger minutesForward = 30;
 	NSUInteger interval = minutesForward * 60;
 	NSDate *now = [NSDate date];
-	NSDate *cutoff = [NSDate dateWithTimeIntervalSinceNow:interval];
+	NSDate *cutoff = [now dateByAddingTimeInterval:interval];
 	NSPredicate *query = [eventStore predicateForEventsWithStartDate:now endDate:cutoff calendars:nil];
 	NSArray *events = [eventStore eventsMatchingPredicate:query];
-	// pick the meeting event that hasn't started
+	// pick the meeting event with a start date closest to 'now'
 	EKEvent *targetEvent = nil;
 	NSDictionary *targetData;
 	for (EKEvent *upcomingEvent in events) {
@@ -343,14 +343,16 @@ void QSiCalNotif(NSString *title, NSString *message) {
 			// skip events with no meeting URL
 			continue;
 		}
-		if ([[upcomingEvent startDate] compare:now] == NSOrderedDescending) {
+		// find the event with the startDate closest to 'now'
+		if (!targetEvent || (fabs([[upcomingEvent startDate] timeIntervalSinceDate:now]) < fabs([[targetEvent startDate] timeIntervalSinceDate:now]))) {
+			// if it's an event in the past and it's already finished, ignore it
+			if ([[upcomingEvent startDate] compare:now] == NSOrderedAscending && [[upcomingEvent endDate] compare:now] == NSOrderedAscending) {
+				continue;
+			}
 			// prefer an event in the future
 			targetData = meetingData;
 			targetEvent = upcomingEvent;
-			break;
 		}
-		targetData = meetingData;
-		targetEvent = upcomingEvent;
 	}
 	if (targetEvent) {
 		return objectFromEvent(targetEvent, targetData);
