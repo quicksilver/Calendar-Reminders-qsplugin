@@ -32,6 +32,8 @@
 		<dict>
 			<key>actionClass</key>
 			<string>QSiCalModule</string>
+			<key>commandFormat</key>
+			<string>Add %1$@ to the %2$@ calendar</string>
 			<key>actionSelector</key>
 			<string>createEvent:inCalendar:</string>
 			<key>directTypes</key>
@@ -48,6 +50,8 @@
 			</array>
 			<key>name</key>
 			<string>Create Calendar Event</string>
+			<key>description</key>
+			<string>Create an event in a [default] calendar</string>
 		</dict>
 		<key>QSiCalCreateEventActionReverse</key>
 		<dict>
@@ -69,6 +73,10 @@
 			</array>
 			<key>name</key>
 			<string>Add Event...</string>
+			<key>description</key>
+			<string>Add an event to the given calendar</string>
+			<key>commandFormat</key>
+			<string>Add %2$@ to the %1$@ calendar</string>
 			<key>precedence</key>
 			<integer>4</integer>
 			<key>reverseArguments</key>
@@ -96,6 +104,10 @@
 			</array>
 			<key>name</key>
 			<string>Create Reminder</string>
+			<key>description</key>
+			<string>Add a reminder to a [default] calendar</string>
+			<key>commandFormat</key>
+			<string>Add %1$@ to the %2$@ calendar</string>
 			<key>validatesObjects</key>
 			<string>NO</string>
 		</dict>
@@ -119,6 +131,10 @@
 			</array>
 			<key>name</key>
 			<string>Add Reminder...</string>
+			<key>description</key>
+			<string>Add a reminder to the given calendar</string>
+			<key>commandFormat</key>
+			<string>Add %2$@ to the %1$@ calendar</string>
 			<key>precedence</key>
 			<integer>4</integer>
 			<key>reverseArgumetns</key>
